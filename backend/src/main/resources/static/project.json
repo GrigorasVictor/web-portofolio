@@ -1,0 +1,82 @@
+[
+  {
+    "title": "Mulit-modal agentic Rag system",
+    "description": "Developed an AI-based content generation and retrieval system, featuring agent-driven orchestration with microservices and a chatbot interface.",
+    "tags": [
+      { "name": "Python" },
+      { "name": "LangChain" },
+      { "name": "MCP" },
+      { "name": "Ollama" },
+      { "name": "AI" }
+    ],
+    "photoUrl": "",
+    "githubUrl": "https://github.com/Victor-Andrei-MHP/mcp-project"
+  },
+  {
+    "title": "HealthCare-AI",
+    "description": "HealthCare-AI is an intelligent application designed to help users remember to take their medication. By leveraging AI and Google Calendar integration, the app schedules reminders and provides helpful notifications to ensure you never miss a dose. Perfect for those with complex medication schedules or anyone who occasionally forgets to take their pills on time.",
+    "tags": [
+      { "name": "Flutter" },
+      { "name": "Python" },
+      { "name": "Google Calendar" },
+      { "name": "Ollama" },
+      { "name": "FastApi" }
+    ],
+    "photoUrl": "",
+    "githubUrl": "https://github.com/GrigorasVictor/HealthCare-AI"
+  },
+  {
+    "title": "CV-Matcher",
+    "description": "I was part of the AI team at a hackathon where I extracted all candidate documents and reformatted CVs and job descriptions into a normalized JSON schema for embedding, enabling accurate semantic search and improved matching results.",
+    "tags": [
+      { "name": "Jupyter Notebook" },
+      { "name": "Python" },
+      { "name": "Ollama" }
+    ],
+    "photoUrl": "",
+    "githubUrl": "https://github.com/humeniucDan/CV-Matcher"
+  },
+  {
+    "title": "RoSubMaster",
+    "description": "Converted MP4 videos with English audio into Romanian-subtitled MP4s using a Python pipeline",
+    "tags": [
+      { "name": "Python" },
+      { "name": "Ffmpeg" },
+      { "name": "Whisper" },
+      { "name": "MarianMT" },
+      { "name": "Pytorch" },
+      { "name": "Torchaudio" },
+      { "name": "Transformers" }
+    ],
+    "photoUrl": "",
+    "githubUrl": "https://github.com/GrigorasVictor/RoSubMaster"
+  },
+  {
+    "title": "Spotify-Stats",
+    "description": "SpotifyStats is a project designed to analyze and visualize Spotify data. It includes components for data processing, machine learning, and a client application built with Flutter.",
+    "tags": [
+      { "name": "Flutter" },
+      { "name": "Python" },
+      { "name": "Spotify-api" },
+      { "name": "Django" },
+      { "name": "JWT" },
+      { "name": "Deep-learning" }
+    ],
+    "photoUrl": "",
+    "githubUrl": "https://github.com/GrigorasVictor/Spotify-Stats"
+  },
+  {
+    "title": "Facebook-clone",
+    "description": "This project is a full-stack social media platform engineered to emulate core functionalities of Facebook. It is developed with a Java-based backend and a JavaScript-driven frontend, structured around a microservices architecture for enhanced scalability and modularity.",
+    "tags": [
+      { "name": "Java" },
+      { "name": "JWT" },
+      { "name": "S3 Bucket" },
+      { "name": "Trello" },
+      { "name": "JavaScript" },
+      { "name": "React" }
+    ],
+    "photoUrl": "",
+    "githubUrl": "https://github.com/GrigorasVictor/Facebook-clone"
+  }
+]
