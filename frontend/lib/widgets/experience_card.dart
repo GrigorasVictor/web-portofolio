@@ -12,6 +12,7 @@ class ExperienceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final dateFormat = DateFormat('MMM yyyy');
+    final dateText = '${dateFormat.format(experience.startDate)} - ${experience.endDate != null ? dateFormat.format(experience.endDate!) : 'Present'}';
 
     return Card(
       elevation: 0,
@@ -22,44 +23,71 @@ class ExperienceCard extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                experience.photoUrl,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(experience.degree, style: textTheme.titleLarge?.copyWith(color: theme_colors.kPortfolioTextPrimary)),
-                  const SizedBox(height: 4),
-                  Text(experience.institution, style: textTheme.titleMedium),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8.0,
-                    runSpacing: 8.0,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    experience.photoUrl,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 80,
+                        height: 80,
+                        color: theme_colors.kPortfolioBackground,
+                        child: Icon(
+                          Icons.image_not_supported_outlined,
+                          color: theme_colors.kPortfolioTextSecondary.withOpacity(0.5),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _InfoBubble(
-                        icon: Icons.location_on_outlined,
-                        text: experience.location,
-                      ),
-                      _InfoBubble(
-                        icon: Icons.calendar_today_outlined,
-                        text: '${dateFormat.format(experience.startDate)} - ${dateFormat.format(experience.endDate)}',
+                      Text(experience.title, style: textTheme.titleLarge?.copyWith(color: theme_colors.kPortfolioTextPrimary)),
+                      const SizedBox(height: 4),
+                      Text(experience.company, style: textTheme.titleMedium),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: [
+                          _InfoBubble(
+                            icon: Icons.location_on_outlined,
+                            text: experience.location,
+                          ),
+                          _InfoBubble(
+                            icon: Icons.calendar_today_outlined,
+                            text: dateText,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+            const SizedBox(height: 16),
+            Text(
+              experience.description,
+              style: textTheme.bodyMedium?.copyWith(color: theme_colors.kPortfolioTextSecondary.withOpacity(0.9)),
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 8.0,
+              runSpacing: 8.0,
+              children: experience.tags.map((tag) => _TagBubble(text: tag)).toList(),
+            )
           ],
         ),
       ),
@@ -95,3 +123,25 @@ class _InfoBubble extends StatelessWidget {
     );
   }
 }
+
+class _TagBubble extends StatelessWidget {
+  final String text;
+
+  const _TagBubble({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      decoration: BoxDecoration(
+        color: theme_colors.kPortfolioTagBackground,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Text(
+        text.toUpperCase(),
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: theme_colors.kPortfolioTagText, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+}
+

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'models/education.dart';
 import 'models/experience.dart';
-import 'widgets/experience_section.dart';
+import 'models/project.dart';
+import 'sections/experience_section.dart';
+import 'sections/project_section.dart';
+import 'services/api_service.dart';
+import 'sections/education_section.dart';
 import 'theme/colors.dart' as theme_colors;
-import 'widgets/about_section.dart';
+import 'sections/about_section.dart';
 import 'widgets/hero_title.dart';
 
 void main() {
@@ -56,26 +61,18 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final _aboutKey = GlobalKey();
+  final ApiService _apiService = ApiService();
+  late final Future<List<Education>> _educationFuture;
+  late final Future<List<Experience>> _experienceFuture;
+  late final Future<List<Project>> _projectsFuture;
 
-  // This would be fetched from an API in a real app
-  final List<Experience> _experiences = [
-    Experience.fromJson({
-      "degree": "Bachelor of Science in Computer Science",
-      "institution": "Technical University of Cluj-Napoca",
-      "location": "Cluj-Napoca, Romania",
-      "startDate": "2022-09-01",
-      "endDate": "2026-06-30",
-      "photoUrl": "https://steep-cyan-anaconda.myfilebase.com/ipfs/QmYQqhxLrRE4BtyFFAqHyUfDZDceW6oDBDcDZV3w6jJjES"
-    }),
-    Experience.fromJson({
-      "degree": "Licensed in Mathematics-Informatics, intensive in informatics",
-      "institution": "‘Dimitrie Cantemir’ National College",
-      "location": "Bacău, Romania",
-      "startDate": "2018-09-01",
-      "endDate": "2022-06-30",
-      "photoUrl": "https://steep-cyan-anaconda.myfilebase.com/ipfs/QmbbEDeuwMgLp1Hvq1Zry1SJbciMAoiZdAU5Q9YgD1as3M"
-    })
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _educationFuture = _apiService.fetchEducation();
+    _experienceFuture = _apiService.fetchExperience();
+    _projectsFuture = _apiService.fetchProjects();
+  }
 
   Future<void> _scrollToAbout() async {
     final context = _aboutKey.currentContext;
@@ -125,7 +122,48 @@ class _MainPageState extends State<MainPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
-                  child: ExperienceSection(experiences: _experiences),
+                  child: FutureBuilder<List<Education>>(
+                    future: _educationFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const EducationSection(educations: null); // Loading state
+                      } else if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const EducationSection(educations: []); // Error/Empty state
+                      } else {
+                        return EducationSection(educations: snapshot.data!); // Data state
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
+                  child: FutureBuilder<List<Experience>>(
+                    future: _experienceFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const ExperienceSection(experiences: null); // Loading state
+                      } else if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const ExperienceSection(experiences: []); // Error/Empty state
+                      } else {
+                        return ExperienceSection(experiences: snapshot.data!); // Data state
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
+                  child: FutureBuilder<List<Project>>(
+                    future: _projectsFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const ProjectSection(projects: null); // Loading state
+                      } else if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const ProjectSection(projects: []); // Error/Empty state
+                      } else {
+                        return ProjectSection(projects: snapshot.data!); // Data state
+                      }
+                    },
+                  ),
                 ),
                 SizedBox(height: h * 0.1),
               ],

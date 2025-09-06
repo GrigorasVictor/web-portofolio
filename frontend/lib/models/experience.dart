@@ -1,28 +1,34 @@
 class Experience {
-  final String degree;
-  final String institution;
+  final String title;
+  final String company;
   final String location;
   final DateTime startDate;
-  final DateTime endDate;
+  final DateTime? endDate;
   final String photoUrl;
+  final String description;
+  final List<String> tags;
 
   Experience({
-    required this.degree,
-    required this.institution,
+    required this.title,
+    required this.company,
     required this.location,
     required this.startDate,
-    required this.endDate,
+    this.endDate,
     required this.photoUrl,
+    required this.description,
+    required this.tags,
   });
 
   factory Experience.fromJson(Map<String, dynamic> json) {
     return Experience(
-      degree: json['degree'],
-      institution: json['institution'],
+      title: json['title'],
+      company: json['company'],
       location: json['location'],
       startDate: DateTime.parse(json['startDate']),
-      endDate: DateTime.parse(json['endDate']),
+      endDate: json['endDate'] != null ? DateTime.parse(json['endDate']) : null,
       photoUrl: json['photoUrl'],
+      description: json['description'],
+      tags: (json['tags'] as List).map((tag) => tag['name'] as String).toList(),
     );
   }
 }

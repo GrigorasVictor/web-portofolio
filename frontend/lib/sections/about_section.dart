@@ -12,7 +12,7 @@ class AboutSection extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
-      padding: const EdgeInsets.all(32.0), // Am mărit padding-ul intern
+      padding: const EdgeInsets.all(32.0), 
       decoration: BoxDecoration(
         color: theme_colors.kPortfolioSurface,
         borderRadius: BorderRadius.circular(24),
@@ -21,7 +21,6 @@ class AboutSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Iconițe Social Media
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -59,23 +58,32 @@ class AboutSection extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 32), // Am mărit spațiul dintre coloane
-              // 30% Poză
+              const SizedBox(width: 32), 
               Expanded(
                 flex: 3,
                 child: AspectRatio(
                   aspectRatio: 1.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: theme_colors.kPortfolioBorder,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.person_outline,
-                        size: 48,
-                        color: theme_colors.kPortfolioTextSecondary,
-                      ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16.0),
+                    child: Image.asset(
+                      'assets/images/personna.png',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Fallback to placeholder if image fails to load
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: theme_colors.kPortfolioBorder,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.person_outline,
+                              size: 48,
+                              color: theme_colors.kPortfolioTextSecondary,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -107,4 +115,3 @@ class _SocialIcon extends StatelessWidget {
     );
   }
 }
-//
