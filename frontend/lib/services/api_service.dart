@@ -13,13 +13,11 @@ class ApiService {
     String endpoint,
     T Function(Map<String, dynamic>) fromJson,
   ) async {
-    final timeout = const Duration(seconds: 10);
-
     for (final baseUrl in AppConfig.apiBaseUrls) {
       final uri = Uri.parse('$baseUrl$endpoint');
       final sw = Stopwatch()..start();
       try {
-        final resp = await http.get(uri).timeout(timeout);
+        final resp = await http.get(uri);
         sw.stop();
         if (resp.statusCode == 200) {
           final body = utf8.decode(resp.bodyBytes);
@@ -32,9 +30,6 @@ class ApiService {
         } else {
           debugPrint('GET $uri -> ${resp.statusCode} (elapsed ${sw.elapsedMilliseconds}ms)');
         }
-      } on TimeoutException {
-        sw.stop();
-        debugPrint('GET $uri -> timeout after ${timeout.inSeconds}s');
       } catch (e) {
         sw.stop();
         debugPrint('GET $uri -> error: $e (elapsed ${sw.elapsedMilliseconds}ms)');

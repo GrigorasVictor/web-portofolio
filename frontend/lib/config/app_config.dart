@@ -2,9 +2,7 @@
 /// Modify these values when deploying to different environments.
 class AppConfig {
   static const List<String> apiBaseUrls = [
-    "http://127.0.0.1:8080",
-    "http://localhost:8080",
-
+    "https://spring-boot-portofolio-d3cpf5hgbtcuajcp.westeurope-01.azurewebsites.net"
   ];
 
   // API Endpoints
