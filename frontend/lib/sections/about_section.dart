@@ -1,18 +1,27 @@
-// ...existing code...
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/theme/colors.dart' as theme_colors;
 import 'package:frontend/theme/texts.dart' as theme_texts;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:frontend/config/app_config.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
+
+  Future<void> _launchURL(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url)) {
+      debugPrint('Could not launch $urlString');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
-      padding: const EdgeInsets.all(32.0), 
+      padding: const EdgeInsets.all(32.0),
       decoration: BoxDecoration(
         color: theme_colors.kPortfolioSurface,
         borderRadius: BorderRadius.circular(24),
@@ -24,9 +33,32 @@ class AboutSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _SocialIcon(icon: FontAwesomeIcons.github, onTap: () {}),
-              _SocialIcon(icon: FontAwesomeIcons.linkedin, onTap: () {}),
-              _SocialIcon(icon: Icons.email_outlined, onTap: () {}),
+              _SocialIcon(
+                icon: FontAwesomeIcons.github,
+                onTap: () => _launchURL(AppConfig.githubUrl), 
+              ),
+              _SocialIcon(
+                icon: FontAwesomeIcons.linkedin,
+                onTap: () => _launchURL(AppConfig.linkedinUrl), 
+              ),
+              _SocialIcon(
+                icon: Icons.email_outlined,
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: AppConfig.emailAddress)).then((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Email copied to clipboard!'),
+                        behavior: SnackBarBehavior.floating,
+                        width: 250,
+                      ),
+                    );
+                  });
+                },
+              ),
+              _SocialIcon(
+                icon: FontAwesomeIcons.solidFileLines, // CV Icon
+                onTap: () => _launchURL(AppConfig.cvUrl), 
+              ),
             ],
           ),
           const SizedBox(height: 24),
@@ -58,7 +90,7 @@ class AboutSection extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 32), 
+              const SizedBox(width: 32),
               Expanded(
                 flex: 3,
                 child: AspectRatio(
@@ -66,7 +98,7 @@ class AboutSection extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16.0),
                     child: Image.asset(
-                      'assets/images/personna.png',
+                      AppConfig.profileImagePath,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         // Fallback to placeholder if image fails to load

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/config/app_config.dart';
 import 'models/education.dart';
 import 'models/experience.dart';
 import 'models/project.dart';
@@ -32,7 +33,7 @@ class PortfolioApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Portofoliu',
+      title: 'My Portfolio',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: scheme,
@@ -120,23 +121,18 @@ class _MainPageState extends State<MainPage> {
               shaderCallback: (rect) {
                 return RadialGradient(
                   center: Alignment.center,
-                  // CONTROLEAZĂ AICI: Mărimea zonei transparente din centru.
-                  // O valoare mai mică micșorează cercul transparent.
                   radius: 1,
                   colors: [
                     Colors.transparent, 
                     Colors.white,       
                   ],
-                  // CONTROLEAZĂ AICI: Tranziția gradientului.
-                  // [0.4, 0.7] înseamnă că gradientul începe la 40% din rază
-                  // și devine complet alb la 70%. Tot ce este după 70% va fi alb complet.
                   stops: const [0.1, 0.8],
                 ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
               },
               blendMode: BlendMode.dstIn,
               child: Center(
                 child: SvgPicture.asset(
-                  'assets/images/topography.svg',
+                  AppConfig.backgroundSvgPath,
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.fitWidth,
                   colorFilter: ColorFilter.mode(
@@ -161,8 +157,8 @@ class _MainPageState extends State<MainPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Spacer(flex: 2),
-                          const HeroTitle(
-                            words: ['everyone', 'people', 'world'],
+                          HeroTitle(
+                            words: AppConfig.heroWords,
                           ),
                           const Spacer(flex: 1),
                           IconButton(
