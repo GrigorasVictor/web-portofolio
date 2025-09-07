@@ -28,13 +28,9 @@
     </scm>
     <properties>
         <java.version>17</java.version>
-        <postgresql.version>42.7.3</postgresql.version>
+        <postgresql.version>42.7.7</postgresql.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -67,6 +63,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
             <scope>runtime</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/aws.sdk.kotlin/aws-config-jvm -->

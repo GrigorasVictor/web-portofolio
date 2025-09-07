@@ -24,8 +24,8 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
 
-    @Column(name = "photo_url")
-    private String photoUrl;
+    @Column(name = "video_url")
+    private String videoUrl;
     @Column(name = "github_url")
     private String githubUrl;
 
